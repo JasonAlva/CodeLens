@@ -1,0 +1,169 @@
+{
+  "database.py": {
+    "classes": [
+      {
+        "name": "Database",
+        "bases": [],
+        "line": 5,
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 6,
+            "calls": [],
+            "docs": null,
+            "decorators": []
+          },
+          {
+            "name": "add_user",
+            "line": 9,
+            "calls": [
+              "self.users.append"
+            ],
+            "docs": null,
+            "decorators": []
+          },
+          {
+            "name": "get_users",
+            "line": 12,
+            "calls": [],
+            "docs": null,
+            "decorators": []
+          }
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "name": "save_user",
+        "line": 16,
+        "calls": [
+          "Database",
+          "database.add_user"
+        ],
+        "docs": null,
+        "decorators": []
+      }
+    ],
+    "imports": [
+      {
+        "module": "models.user.User"
+      }
+    ]
+  },
+  "main.py": {
+    "classes": [],
+    "functions": [
+      {
+        "name": "create_user",
+        "line": 9,
+        "calls": [
+          "User",
+          "save_user"
+        ],
+        "docs": null,
+        "decorators": []
+      },
+      {
+        "name": "display_user",
+        "line": 15,
+        "calls": [
+          "format_user",
+          "print"
+        ],
+        "docs": null,
+        "decorators": []
+      },
+      {
+        "name": "main",
+        "line": 20,
+        "calls": [
+          "create_user",
+          "display_user"
+        ],
+        "docs": null,
+        "decorators": []
+      }
+    ],
+    "imports": [
+      {
+        "module": "utils.format_user"
+      },
+      {
+        "module": "database.save_user"
+      },
+      {
+        "module": "models.user.User"
+      }
+    ]
+  },
+  "utils.py": {
+    "classes": [],
+    "functions": [
+      {
+        "name": "format_user",
+        "line": 4,
+        "calls": [
+          "json.dumps"
+        ],
+        "docs": null,
+        "decorators": []
+      },
+      {
+        "name": "calculate_age_in_months",
+        "line": 13,
+        "calls": [],
+        "docs": null,
+        "decorators": []
+      }
+    ],
+    "imports": [
+      {
+        "module": "json",
+        "alias": null
+      }
+    ]
+  },
+  "models\\user.py": {
+    "classes": [
+      {
+        "name": "User",
+        "bases": [],
+        "line": 1,
+        "methods": [
+          {
+            "name": "__init__",
+            "line": 2,
+            "calls": [],
+            "docs": null,
+            "decorators": []
+          },
+          {
+            "name": "greet",
+            "line": 6,
+            "calls": [],
+            "docs": null,
+            "decorators": []
+          },
+          {
+            "name": "is_adult",
+            "line": 9,
+            "calls": [],
+            "docs": null,
+            "decorators": []
+          }
+        ]
+      }
+    ],
+    "functions": [],
+    "imports": []
+  },
+  "models\\__init__.py": {
+    "classes": [],
+    "functions": [],
+    "imports": [
+      {
+        "module": "user.User"
+      }
+    ]
+  }
+}
