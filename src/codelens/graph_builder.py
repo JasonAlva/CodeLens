@@ -120,14 +120,14 @@ class CodeGraph:
         resolve_inheritance(self.g,analysis)
         resolve_calls(self.g,analysis)
 
-    def _find_node(self,func_name):
+    def find_node(self,func_name):
         matches=[n for n,a in self.g.nodes(data=True) if a['type']=="function" and (a['name']==func_name or n.endswith(f":{func_name}"))]
         return matches
 
     def callees(self,func_name):
         """What does the func_name call?"""
         results=[]
-        for node in self._find_node(func_name):
+        for node in self.find_node(func_name):
             results+=[v for _,v in self.g.out_edges(node) if self.g.edges[node,v]["type"]=="CALLS"]
 
         return results
@@ -135,14 +135,14 @@ class CodeGraph:
     def callers(self,func_name):
         """What calls func_name?"""
         results=[]
-        for node in self._find_node(func_name):
+        for node in self.find_node(func_name):
             results+=[u for u,_ in self.g.in_edges(node) if self.g.edges[u,node]["type"]=="CALLS"]
 
         return results
     
     def call_chain(self,func_name,max_depth=5):
         import collections
-        start_list=self._find_node(func_name)
+        start_list=self.find_node(func_name)
         visited=set(start_list)
         queue=collections.deque([(n,0) for n in start_list])
         chain=[]
