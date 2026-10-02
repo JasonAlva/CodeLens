@@ -52,6 +52,7 @@ class CodeVisitor(ast.NodeVisitor):
         func={
             "name":node.name,
             "line":node.lineno,
+            "end_line": node.end_lineno,
             "calls":calls,
             "docs":ast.get_docstring(node),                          
             "decorators":[ast.unparse(d) for d in node.decorator_list]  
@@ -118,6 +119,6 @@ def analyze_repo(repo_path):
 
     return results
 
-def save_json(data,out_path="output.json"):
+def save_json(data,out_path):
     with open(out_path,"w",encoding="utf-8") as f:  
         json.dump(data,f,indent=2)
