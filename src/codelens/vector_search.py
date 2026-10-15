@@ -91,11 +91,13 @@ def graph_rag_search(query,index,chunks,graph:CodeGraph,top_k=3):
     return enriched
 
 def build_search_index(analysis,repo_path):
+    """Run once per repo. Returns (index, chunks) to reuse across many queries."""
     chunks=chunk_repo(analysis,repo_path)
     embedded_chunks=embed_chunks(chunks)
     index,chunks=build_vector_index(embedded_chunks)
     return index, chunks
 
 def search(query,index,chunks,graph:CodeGraph):
+    """Run per query. Cheap — just embeds the query and does a similarity lookup."""
     return graph_rag_search(query,index,chunks,graph)
      
