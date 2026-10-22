@@ -9,8 +9,10 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "anthropic>=1.5.0",
+    "fastmcp>=4.1.3",
     "google-genai>=2.27.0",
     "matplotlib>=3.10.9",
+    "mcp[cli]>=2.3.0",
     "networkx>=3.4.2",
     "numpy>=2.2.6",
     "python-dotenv>=1.2.4",
@@ -20,6 +22,7 @@ dependencies = [
 
 [project.scripts]
 codelens = "codelens.main:main"
+codelens-mcp = "codelens.mcp_server:main"
 
 [build-system]
 requires = ["uv_build>=0.12.2,<0.13.0"]

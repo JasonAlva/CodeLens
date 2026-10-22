@@ -1,9 +1,12 @@
+from google.genai._gaos._hooks import asyncregistration
+from google.genai._gaos._hooks import asyncregistration
+from google.genai._gaos._hooks import asyncregistration
+from transformers import FunAsrNanoAdaptorConfig
 from huggingface_hub.errors import GatedRepoError
 from torch import mode
 from google import genai
 from google.genai import types
-from .impact import impact_report
-from .vector_search import graph_rag_search
+from .tools import search_code,get_callees,get_callers,impact_analysis
 
 client=genai.Client()
 
@@ -60,27 +63,6 @@ TOOLS = [
 ]
 
 
-def search_code(query,index,chunks,graph):
-    results=graph_rag_search(query,index,chunks,graph,top_k=5)
-    if not results:
-        return "no relevant answer found"
-    lines=[]
-   
-
-    for r in results:
-        chunk=r['chunk']
-        score=r['score']
-        lines.append(f"- {chunk['name'] , chunk['filepath']}, score={score:.2f}")
-        if r['callers']:
-            lines.append(f"called by :{','.join(r['callers'])} ")
-        if r['callees']:
-            lines.append(f"calls :{','.join(r['callees'])} ")
-    
-    return "/n".join(lines)
-
-def impact_analysis(graph,target_name:str,repo_path:str):
-    return impact_report(graph,target_name,repo_path)
-
 
 
 def ask(question,graph,index,chunks,repo_path,max_turns=4):
@@ -128,11 +110,9 @@ def dispatch_tool(name,args,graph,index,chunks,repo_path):
     if name=='search_code':
         return search_code(args['query'],index,chunks,graph)
     elif name=='get_callers':
-        neighbors=list(graph.predecessors(args['fn']))
-        return ', '.join(neighbors) if neighbors else f"no callers found for {args['fn']}"
+        return get_callers(graph,args['fn'])
     elif name=='get_callees':
-        neighbors=list(graph.successors(args['fn']))
-        return ', '.join(neighbors) if neighbors else f"no callees found for {args['fn']}"
+        return get_callees(graph,args['fn'])
     elif name=='impact_analysis':
         return impact_analysis(graph,args['target'],repo_path)
     else :
